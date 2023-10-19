@@ -1,3 +1,3 @@
-namespace DataLib.Card;
+namespace DataLib.Cards;
 
 public record Card(Color Color, int Number);

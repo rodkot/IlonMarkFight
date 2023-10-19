@@ -1,6 +1,6 @@
-namespace DataLib.Desk;
+using DataLib.Cards;
 
-using Card;
+namespace DataLib.Desks;
 
 public abstract class Desk
 {
@@ -8,10 +8,10 @@ public abstract class Desk
 
     public int Length => Cards.Length;
 
-    public Desk(uint count)
+    protected Desk(uint count)
     {
-        Card[] cards = new Card[count];  
-        for (int i = 0; i < count; i += 2)
+        var cards = new Card[count];  
+        for (var i = 0; i < count; i += 2)
         {
             cards[i] = new Card(Color.Black, i);
             cards[i + 1] = new Card(Color.Red, i + 1);

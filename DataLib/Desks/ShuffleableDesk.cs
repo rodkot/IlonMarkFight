@@ -1,8 +1,8 @@
-namespace DataLib.Desk;
-using Card;
+namespace DataLib.Desks;
+
 public class ShuffleableDesk : Desk
 {
-    public ShuffleableDesk(uint count) : base(count)
+    protected ShuffleableDesk(uint count) : base(count)
     {
     }
     

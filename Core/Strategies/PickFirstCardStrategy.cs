@@ -1,11 +1,11 @@
-using DataLib.Card;
+using DataLib.Cards;
 using DataLib.Persons.Opponents.Strategies;
 
-namespace ConsoleApp.Strategies;
+namespace Core.Strategies;
 
 public class PickFirstCardStrategy: ICardPickStrategy
 {
-    public Card Pick(Card[] cards)
+    public Card Pick(IEnumerable<Card> cards)
     {
         return cards.First();
     }

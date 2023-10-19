@@ -1,5 +1,4 @@
-namespace DataLib.Desk;
-using Card;
+namespace DataLib.Desks.Interfacies;
 
 public interface IDeskShuffler
 {

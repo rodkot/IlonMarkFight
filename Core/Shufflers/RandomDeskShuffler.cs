@@ -1,6 +1,7 @@
-using DataLib.Desk;
+using DataLib.Desks;
+using DataLib.Desks.Interfacies;
 
-namespace ConsoleApp.Shufflers;
+namespace Core.Shufflers;
 
 public class RandomDeskShuffler:IDeskShuffler
 {

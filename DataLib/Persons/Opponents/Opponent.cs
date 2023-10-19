@@ -4,7 +4,7 @@ namespace DataLib.Persons.Opponents;
 
 public abstract class Opponent : Person
 {
-    internal Card.Card ChooseCard { get; private  set; }
+    public Cards.Card ChooseCard { get; private  set; }
     private readonly ICardPickStrategy _strategy;
 
     protected Opponent(string name, ICardPickStrategy strategy) : base(name)
@@ -12,7 +12,7 @@ public abstract class Opponent : Person
         _strategy = strategy;
     }
 
-    public void Choose(Card.Card[] cards)
+    public void Choose(Cards.Card[] cards)
     {
         ChooseCard = _strategy.Pick(cards);
     }

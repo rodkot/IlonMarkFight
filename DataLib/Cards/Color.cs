@@ -1,4 +1,4 @@
-namespace DataLib.Card;
+namespace DataLib.Cards;
 
 public enum Color
 {

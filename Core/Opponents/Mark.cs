@@ -1,7 +1,7 @@
 using DataLib.Persons.Opponents;
 using DataLib.Persons.Opponents.Strategies;
 
-namespace ConsoleApp.Opponents;
+namespace Core.Opponents;
 
 
 public class Mark: Opponent

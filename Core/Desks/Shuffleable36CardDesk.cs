@@ -1,6 +1,6 @@
-using DataLib.Desk;
+using DataLib.Desks;
 
-namespace ConsoleApp.Desks;
+namespace Core.Desks;
 
 public class Shuffleable36CardDesk : ShuffleableDesk
 {

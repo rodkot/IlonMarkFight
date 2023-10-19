@@ -1,14 +1,12 @@
-using DataLib.Person;
 using DataLib.SandBoxes;
-
-namespace ConsoleApp;
-
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+namespace Core.Workers;
+
 public class SandboxWorker : BackgroundService
 {
-    public int Count { get; set; } = 1_000_000;
+    private static int Count => 1_000_000;
     private readonly Sandbox _sandbox;
     private readonly ILogger _logger;
     private readonly IHostApplicationLifetime _lifetime;
@@ -24,7 +22,7 @@ public class SandboxWorker : BackgroundService
     {
         var success = 0;
         var completed = 0;
-        for (int i = 0; i < Count && !stoppingToken.IsCancellationRequested; i++)
+        for (var i = 0; i < Count && !stoppingToken.IsCancellationRequested; i++)
         {
             
             if (i % 100000 == 0)
@@ -41,7 +39,7 @@ public class SandboxWorker : BackgroundService
         }
 
         Console.WriteLine($"Experiments completed: {completed}");
-        Console.WriteLine($"Success rate: {(double)success / (completed)}");
+        Console.WriteLine($"Success rate: {(double)success / completed}");
 
         _lifetime.StopApplication();
 

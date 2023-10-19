@@ -1,6 +1,6 @@
 namespace DataLib.Persons.Opponents.Strategies;
-
+using Cards;
 public interface ICardPickStrategy
 {
-    public abstract Card.Card Pick(Card.Card[] cards);
+    public Card Pick(IEnumerable<Card> cards);
 }
