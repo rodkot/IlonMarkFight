@@ -1,12 +1,9 @@
-using Core.Strategies;
 using DataLib.Cards;
 using DataLib.Desks;
 using DataLib.Desks.Interfacies;
 using DataLib.Persons.Distributors;
 using DataLib.Persons.Opponents;
-using DataLib.Persons.Opponents.Strategies;
 using DataLib.SandBoxes;
-using Microsoft.Extensions.Logging;
 
 namespace CoreTest;
 

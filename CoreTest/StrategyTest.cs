@@ -1,7 +1,5 @@
 using Core.Strategies;
 using DataLib.Desks;
-using DataLib.Desks.Interfacies;
-using DataLib.Persons.Opponents.Strategies;
 
 namespace CoreTest;
 

@@ -1,5 +1,4 @@
 using DataLib.Cards;
-using DataLib.Persons.Opponents;
 
 namespace DataLib.Persons.Distributors;
 

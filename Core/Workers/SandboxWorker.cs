@@ -11,7 +11,7 @@ public class SandboxWorker : BackgroundService
     private readonly ILogger _logger;
     private readonly IHostApplicationLifetime _lifetime;
 
-    public SandboxWorker(Sandbox sandbox, ILogger<SandboxWorker> logger, IHostApplicationLifetime lifetime)
+    public SandboxWorker(Sandbox sandbox, ILogger logger, IHostApplicationLifetime lifetime)
     {
         _sandbox = sandbox;
         _logger = logger;

@@ -12,7 +12,7 @@ public abstract class Opponent : Person, IChooseCard
         _strategy = strategy;
     }
     
-    public Card Choose(Card[] cards)
+    public Card Choose(IEnumerable<Card> cards)
     {
         return _strategy.Pick(cards);
     }
