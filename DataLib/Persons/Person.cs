@@ -8,5 +8,5 @@ public abstract class Person
         Name = name;
     }
 
-    private string Name { get; }
+    public string Name { get; }
 }

@@ -7,8 +7,7 @@ public class RandomDeskShuffler:IDeskShuffler
 {
     private static readonly Random Rnd = new();
     
-    // uses Fisher–Yates shuffle
-    public void Shuffle(in ShuffleableDesk desk)
+    public void Shuffle(ShuffleableDesk desk)
     {
         for (var i = desk.Length - 1; i >= 0; i--)
         {

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLib", "DataLib\DataLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{42CC422A-B790-405F-81E4-198D23A326EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTest", "CoreTest\CoreTest.csproj", "{4E1F1E4C-E6A0-48FA-BCD2-B55639C04128}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{42CC422A-B790-405F-81E4-198D23A326EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42CC422A-B790-405F-81E4-198D23A326EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42CC422A-B790-405F-81E4-198D23A326EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1F1E4C-E6A0-48FA-BCD2-B55639C04128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1F1E4C-E6A0-48FA-BCD2-B55639C04128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1F1E4C-E6A0-48FA-BCD2-B55639C04128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1F1E4C-E6A0-48FA-BCD2-B55639C04128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

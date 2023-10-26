@@ -8,8 +8,13 @@ public abstract class Desk
 
     public int Length => Cards.Length;
 
-    protected Desk(uint count)
+    protected Desk(int count)
     {
+        if (count%2 == 1)
+        {
+            throw new ArgumentException("Не может существовать нечетной колоды");
+        }
+        
         var cards = new Card[count];  
         for (var i = 0; i < count; i += 2)
         {
@@ -20,7 +25,11 @@ public abstract class Desk
         Cards = cards;
     }
 
-    public void Split(out Card[] first, out Card[] second)
+    public Card GetByIndex(uint index)
+    {
+        return Cards[index];
+    }
+    public virtual void Split(out Card[] first, out Card[] second)
     {
         var mid = Cards.Length / 2;
         first = Cards.Take(mid).ToArray();

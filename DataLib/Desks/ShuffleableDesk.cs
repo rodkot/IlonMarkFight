@@ -2,7 +2,7 @@ namespace DataLib.Desks;
 
 public class ShuffleableDesk : Desk
 {
-    protected ShuffleableDesk(uint count) : base(count)
+    public ShuffleableDesk(int count) : base(count)
     {
     }
     
