@@ -1,19 +1,19 @@
 using DataLib.Persons.Opponents.Strategies;
 
 namespace DataLib.Persons.Opponents;
+using Cards;
 
-public abstract class Opponent : Person
+public abstract class Opponent : Person, IChooseCard
 {
-    public Cards.Card ChooseCard { get; private  set; }
     private readonly ICardPickStrategy _strategy;
 
     protected Opponent(string name, ICardPickStrategy strategy) : base(name)
     {
         _strategy = strategy;
     }
-
-    public void Choose(Cards.Card[] cards)
+    
+    public Card Choose(Card[] cards)
     {
-        ChooseCard = _strategy.Pick(cards);
+        return _strategy.Pick(cards);
     }
 }
