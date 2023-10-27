@@ -6,11 +6,19 @@ namespace CoreTest;
 [TestFixture]
 public class DeskTest
 {
-    [TestCase(0)]
+
+    [Test] 
+    public void DeskLengthHasNotZero()
+    {
+        var action = () => { new ShuffleableDesk(0); };
+        
+        action.Should().Throw<ArgumentException>();   
+    }
+    
     [TestCase(2)]
     [TestCase(4)]
     [TestCase(1000)]
-    public void Desk_Length_HasExpectedLength(int count)
+    public void DeskLengthHasExpectedLength(int count)
     {
         var desk = new ShuffleableDesk(count);
 
@@ -19,7 +27,7 @@ public class DeskTest
 
     [TestCase(36)]
     [TestCase(54)]
-    public void Desk_Split_TwoHalves_EqualLength(int count)
+    public void DeskSplitTwoHalvesEqualLength(int count)
     {
         var desk = new ShuffleableDesk(count);
         
@@ -30,10 +38,11 @@ public class DeskTest
 
     [TestCase(36)]
     [TestCase(54)]
-    public void Desk_Split_Tow_NotEqual_Halves(int count)
+    public void DeskSplitTowNotEqualHalves(int count)
     {
         var desk = new ShuffleableDesk(count);
         desk.Split(out var firstSplitCard, out var secondSplitCard);
+        var countEqualsCard = 0;
         
         for (var i = 0u; i < count/2; i++)
         {
@@ -41,45 +50,34 @@ public class DeskTest
             {
                 if (firstSplitCard[i].Equals(secondSplitCard[j]))
                 {
-                    Assert.Fail("Карта не может находиться одновременно в двух частях");
+                    countEqualsCard++;
                 }
             }
         }
         
-        Assert.Pass();
+        countEqualsCard.Should().Be(0);
     }
 
     [TestCase(36)]
     [TestCase(54)]
-    public void Desk_Has_TwoHalves_NotEqualColor(int count)
+    public void DeskHasTwoHalvesNotEqualColor(int count)
     {
         var desk = new ShuffleableDesk(count);
-        var (countRedCards, countBlackCards) = (0, 0);
-        for (var i = 0u; i < count; i++)
-        {
-            switch (desk.GetByIndex(i).Color)
-            {
-                case Color.Red:
-                    countRedCards++;
-                    break;
-                case Color.Black:
-                    countBlackCards++;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
+        
+        var countBlackCards = desk.Cards.Count(c => c.Color == Color.Black);
+        var countRedCards = desk.Cards.Count(c => c.Color == Color.Red);
+        
         countRedCards.Should().Be(countBlackCards);
     }
 
     [TestCase(36)]
     [TestCase(54)]
-    public void Desk_HasNot_SameCard(int count)
+    public void DeskHasNotSameCard(int count)
     {
         var desk = new ShuffleableDesk(count);
         var countEqualsCard = 0;
-        for (var i = 0u; i < count - 1; i++)
+        
+        for (var i = 0; i < count - 1; i++)
         {
             for (var j = i + 1; j < count; j++)
             {
@@ -97,7 +95,7 @@ public class DeskTest
     [TestCase(3)]
     [TestCase(5)]
     [TestCase(1001)]
-    public void Desk_Odd_Length_ThrowsException(int count)
+    public void DeskOddLengthThrowsException(int count)
     {
         var action = () => { new ShuffleableDesk(count); };
         

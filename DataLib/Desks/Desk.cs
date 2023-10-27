@@ -4,13 +4,18 @@ namespace DataLib.Desks;
 
 public abstract class Desk
 {
-    protected readonly Card[] Cards;
+    public IList<Card> Cards { get; private set; }
 
-    public int Length => Cards.Length;
+    public int Length => Cards.Count;
 
     protected Desk(int count)
     {
-        if (count%2 == 1)
+        if (count <= 0)
+        {
+            throw new ArgumentException("Не может быть пустой колоды");
+        }
+        
+        if (count % 2 == 1)
         {
             throw new ArgumentException("Не может существовать нечетной колоды");
         }
@@ -25,13 +30,14 @@ public abstract class Desk
         Cards = cards;
     }
 
-    public Card GetByIndex(uint index)
+    public Card GetByIndex(int index)
     {
         return Cards[index];
     }
+    
     public virtual void Split(out Card[] first, out Card[] second)
     {
-        var mid = Cards.Length / 2;
+        var mid = Cards.Count / 2;
         first = Cards.Take(mid).ToArray();
         second = Cards.Skip(mid).ToArray();
     }

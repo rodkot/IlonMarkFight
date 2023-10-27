@@ -6,7 +6,7 @@ public class CardTests
 {
     
     [Test]
-    public void Card_Has_SameColorPassedToConstructor()
+    public void CardHasSameColorPassedToConstructor()
     {
         var c = new Card(Color.Black, 1);
         
@@ -14,24 +14,17 @@ public class CardTests
     }
 
     [Test]
-    public void Card_Has_SameNumberPassedToConstructor()
+    public void CardHasSameNumberPassedToConstructor()
     {
         const int num = 1;
         var c = new Card(Color.Black, num);
         
+        c.Should().NotBeNull();
         c.Number.Should().Be(num);
     }
     
     [Test]
-    public void Card_Equals_CardWithNull_False()
-    {
-        var c = new Card(Color.Black, 1);
-        
-        c.Should().NotBe(null);
-    }
-
-    [Test]
-    public void Card_Equals_CardWithSelf_True()
+    public void CardEqualsCardWithSelfTrue()
     {
         var c = new Card(Color.Black, 1);
 
@@ -39,7 +32,7 @@ public class CardTests
     }
     
     [Test]
-    public void Card_Equals_CardWithDifferentColor_False()
+    public void CardEqualsCardWithDifferentColorFalse()
     {
         var c1 = new Card(Color.Black, 1);
         var c2 = new Card(Color.Red, 1);
@@ -48,7 +41,7 @@ public class CardTests
     }
     
     [Test]
-    public void Card_Equals_CardWithDifferentNumber_False()
+    public void CardEqualsCardWithDifferentNumberFalse()
     {
         var c1 = new Card(Color.Black, 1);
         var c2 = new Card(Color.Black, 2);
@@ -57,7 +50,7 @@ public class CardTests
     }
     
     [Test]
-    public void Card_Equals_CardWithSameNumberAndColor_True()
+    public void CardEqualsCardWithSameNumberAndColorTrue()
     {
         var c1 = new Card(Color.Black, 1);
         var c2 = new Card(Color.Black, 1);

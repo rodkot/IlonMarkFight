@@ -1,5 +1,5 @@
 using DataLib.Desks;
-using DataLib.Desks.Interfacies;
+using DataLib.Desks.Interfaces;
 using DataLib.Exceptions;
 using DataLib.Persons.Distributors;
 using DataLib.Persons.Opponents;
@@ -17,7 +17,8 @@ public class Sandbox
     public Sandbox(IEnumerable<IChooseCard> opponents, ShuffleableDesk desk, IDistributor distributor,
         IDeskShuffler deskShuffler)
     {
-        var enumerable = opponents as IChooseCard[] ?? opponents.ToArray();
+        var enumerable = opponents.ToArray();
+        
         if (enumerable.Length < 2)
         {
             throw new NotEnoughPlayersException($"expected 2 players, have {enumerable.Length}");

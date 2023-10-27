@@ -3,6 +3,6 @@ using DataLib.Cards;
 namespace DataLib.Persons.Opponents;
 
 public interface IChooseCard
-{
-    public Card Choose(IEnumerable<Card> cards);
+{ 
+    Card Choose(IEnumerable<Card> cards);
 }

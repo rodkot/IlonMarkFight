@@ -8,7 +8,7 @@ public class ShuffleableDesk : Desk
     
     public void SwapCards(int i, int j)
     {
-        if (i >= Cards.Length || j >= Cards.Length) return;
+        if (i >= Cards.Count || j >= Cards.Count) return;
         (Cards[i], Cards[j]) = (Cards[j], Cards[i]);
     }
 }

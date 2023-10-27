@@ -11,13 +11,13 @@ public class SandboxWorker : BackgroundService
     private readonly ILogger _logger;
     private readonly IHostApplicationLifetime _lifetime;
 
-    public SandboxWorker(Sandbox sandbox, ILogger logger, IHostApplicationLifetime lifetime)
+    public SandboxWorker(Sandbox sandbox, ILogger<SandboxWorker>  logger, IHostApplicationLifetime lifetime)
     {
         _sandbox = sandbox;
         _logger = logger;
         _lifetime = lifetime;
     }
-
+    
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var success = 0;
@@ -38,8 +38,8 @@ public class SandboxWorker : BackgroundService
             completed += 1;
         }
 
-        Console.WriteLine($"Experiments completed: {completed}");
-        Console.WriteLine($"Success rate: {(double)success / completed}");
+        _logger.LogInformation($"Experiments completed: {completed}");
+        _logger.LogInformation($"Success rate: {(double)success / completed}");
 
         _lifetime.StopApplication();
 

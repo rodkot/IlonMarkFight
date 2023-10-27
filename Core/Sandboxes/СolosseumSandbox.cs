@@ -1,5 +1,5 @@
 using DataLib.Desks;
-using DataLib.Desks.Interfacies;
+using DataLib.Desks.Interfaces;
 using DataLib.Persons.Distributors;
 using DataLib.Persons.Opponents;
 using DataLib.SandBoxes;

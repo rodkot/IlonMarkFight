@@ -1,8 +1,7 @@
 using DataLib.Desks;
-using DataLib.Desks.Interfacies;
+using DataLib.Desks.Interfaces;
 
 namespace Core.Shufflers;
-
 public class RandomDeskShuffler:IDeskShuffler
 {
     private static readonly Random Rnd = new();
@@ -15,4 +14,6 @@ public class RandomDeskShuffler:IDeskShuffler
             desk.SwapCards(i, j);
         }
     }
+
+
 }
