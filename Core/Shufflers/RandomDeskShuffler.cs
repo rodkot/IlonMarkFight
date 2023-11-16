@@ -1,14 +1,13 @@
-using DataLib.Desks;
-using DataLib.Desks.Interfacies;
+using DataLib.Desks.Interfaces;
+using DataLib.Shuffler.Interfaces;
 
 namespace Core.Shufflers;
 
-public class RandomDeskShuffler:IDeskShuffler
+public class RandomDeskShuffler : IDeskShuffler
 {
     private static readonly Random Rnd = new();
-    
-    // uses Fisher–Yates shuffle
-    public void Shuffle(in ShuffleableDesk desk)
+
+    public void Shuffle(IShuffleableDesk desk)
     {
         for (var i = desk.Length - 1; i >= 0; i--)
         {

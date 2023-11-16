@@ -1,5 +1,5 @@
-using DataLib.Persons.Opponents;
-using DataLib.Persons.Opponents.Strategies;
+using DataLib.Opponents;
+using DataLib.Strategies.Interfaces;
 
 namespace Core.Opponents;
 

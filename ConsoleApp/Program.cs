@@ -5,11 +5,11 @@ using Core.Sandboxes;
 using Core.Shufflers;
 using Core.Strategies;
 using Core.Workers;
-using DataLib.Desks;
-using DataLib.Desks.Interfacies;
-using DataLib.Persons.Distributors;
-using DataLib.Persons.Opponents;
+using DataLib.Desks.Interfaces;
+using DataLib.Distributors.Interfaces;
+using DataLib.Opponents;
 using DataLib.SandBoxes;
+using DataLib.Shuffler.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -30,10 +30,10 @@ internal static class Program
                 services.AddHostedService<SandboxWorker>();
                 services.AddScoped<Sandbox, СolosseumSandbox>();
                 services.AddSingleton<IDeskShuffler, RandomDeskShuffler>();
-                services.AddSingleton<IDistributor,Zeus>();
+                services.AddSingleton<IDistributor, Zeus>();
                 services.AddSingleton<Opponent>(new Ilon(new PickFirstCardStrategy()));
                 services.AddSingleton<Opponent>(new Mark(new PickFirstCardStrategy()));
-                services.AddSingleton<ShuffleableDesk>(new Shuffleable36CardDesk());
+                services.AddSingleton<IShuffleableDesk>(new Shuffleable36CardDesk());
             });
     }
 }
