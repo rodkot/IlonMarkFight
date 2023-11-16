@@ -7,10 +7,11 @@ using Core.Strategies;
 using Core.Workers;
 using DataLib.Desks;
     using DataLib.Desks.Interfaces;
-    using DataLib.Persons.Distributors;
-using DataLib.Persons.Opponents;
-using DataLib.SandBoxes;
-using Microsoft.Extensions.DependencyInjection;
+    using DataLib.Distributors.Interfaces;
+    using DataLib.Opponents;
+    using DataLib.SandBoxes;
+    using DataLib.Shuffler.Interfaces;
+    using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace ConsoleApp;
@@ -33,7 +34,7 @@ internal static class Program
                 services.AddSingleton<IDistributor,Zeus>();
                 services.AddSingleton<Opponent>(new Ilon(new PickFirstCardStrategy()));
                 services.AddSingleton<Opponent>(new Mark(new PickFirstCardStrategy()));
-                services.AddSingleton<ShuffleableDesk>(new Shuffleable36CardDesk());
+                services.AddSingleton<IShuffleableDesk>(new ShuffleableDesk(36));
             });
     }
 }

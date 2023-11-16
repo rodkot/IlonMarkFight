@@ -1,9 +1,10 @@
+using Core.Desks;
 using DataLib.Cards;
-using DataLib.Desks;
 using DataLib.Desks.Interfaces;
-using DataLib.Persons.Distributors;
-using DataLib.Persons.Opponents;
+using DataLib.Distributors.Interfaces;
+using DataLib.Opponents.Interfaces;
 using DataLib.SandBoxes;
+using DataLib.Shuffler.Interfaces;
 
 namespace CoreTest;
 
@@ -11,7 +12,7 @@ namespace CoreTest;
 public class SandBoxTest
 {
     private Mock<IDeskShuffler> _shufflerMock;
-    private Mock<ShuffleableDesk> _deskMock;
+    private Mock<IShuffleableDesk> _deskMock;
 
     private Mock<IDistributor> _distributor;
     private Mock<IChooseCard> _elonMock;
@@ -32,7 +33,7 @@ public class SandBoxTest
     }
 
     [Test]
-    public void Sandbox_Round_CallsSplit_OnlyOnce()
+    public void SandboxRoundCallsSplit_OnlyOnce()
     {
         _sandbox.Round();
         
@@ -40,15 +41,15 @@ public class SandBoxTest
     }
     
     [Test]
-    public void Sandbox_Round_CallsShuffle_OnlyOnce()
+    public void SandboxRoundCallsShuffleOnlyOnce()
     {
         _sandbox.Round();
 
-        _shufflerMock.Verify(s => s.Shuffle(It.IsAny<ShuffleableDesk>()), Times.Once);
+        _shufflerMock.Verify(s => s.Shuffle(It.IsAny<IShuffleableDesk>()), Times.Once);
     }
 
     [Test]
-    public void Sandbox_Round_Has_ExpectedResult()
+    public void SandboxRoundHasExpectedResult()
     {
         var result = _sandbox.Round();
 
@@ -57,22 +58,18 @@ public class SandBoxTest
 
     private void MockDesk()
     {
-        var deck = new ShuffleableDesk(36);
-        deck.Split(out _firstAfterSplit, out _secondAfterSplit);
-
-        _deskMock = new Mock<ShuffleableDesk>(36);
+        _deskMock = new Mock<IShuffleableDesk>();
         _deskMock.Setup(d => d.Split(out _firstAfterSplit, out _secondAfterSplit)).Callback(() =>
         {
-            // Logic to populate firstHalf and secondHalf mock data.
         });
     }
 
     private void MockShuffler()
     {
         _shufflerMock = new Mock<IDeskShuffler>();
-        // _shufflerMock.Setup(s => s.Shuffle(It.IsAny<ShuffleableDesk>())).Callback(() => {
-        //     Console.Out.WriteLine("helllo");
-        // });
+        _shufflerMock.Setup(s => s.Shuffle(It.IsAny<IShuffleableDesk>())).Callback(() => {
+            Console.Out.WriteLine("helllo");
+        });
     }
 
     private void MockOpponents()

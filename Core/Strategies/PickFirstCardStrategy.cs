@@ -1,5 +1,5 @@
 using DataLib.Cards;
-using DataLib.Persons.Opponents.Strategies;
+using DataLib.Strategies.Interfaces;
 
 namespace Core.Strategies;
 
