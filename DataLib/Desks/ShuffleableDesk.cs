@@ -1,6 +1,6 @@
 namespace DataLib.Desks;
 
-public class ShuffleableDesk : Desk
+public class IShuffleableDesk : IDesk
 {
     public ShuffleableDesk(int count) : base(count)
     {
