@@ -19,27 +19,32 @@ public class SandBoxTest
     private Mock<IChooseCard> _markMock;
 
     private Sandbox _sandbox;
-    private Card[] _firstAfterSplit;
-    private Card[] _secondAfterSplit;
+    private Card[] _firstAfterSplit = { new(Color.Black, 1) };
+    private Card[] _secondAfterSplit = { new(Color.Black, 2) };
 
     [SetUp]
     public void SetUp()
     {
-        MockDesk();
-        MockShuffler();
-        MockOpponents();
-        MockDistributor();
+        CreateMockDesk();
+        CreateMockShuffle();
+        CreateMockOpponents();
+        CreateMockDistributor();
         CreateSandbox();
     }
 
+    private void CreateMockShuffle()
+    {
+        _shufflerMock = new Mock<IDeskShuffler>();
+    }
+
     [Test]
-    public void SandboxRoundCallsSplit_OnlyOnce()
+    public void SandboxRoundCallsSplitOnlyOnce()
     {
         _sandbox.Round();
-        
+
         _deskMock.Verify(desk => desk.Split(out _firstAfterSplit, out _secondAfterSplit), Times.Once);
     }
-    
+
     [Test]
     public void SandboxRoundCallsShuffleOnlyOnce()
     {
@@ -53,38 +58,29 @@ public class SandBoxTest
     {
         var result = _sandbox.Round();
 
-        result.Should().Be(_firstAfterSplit[0].Color == _secondAfterSplit[0].Color);
+        result.Should().Be(_firstAfterSplit.First().Color == _secondAfterSplit.First().Color);
     }
 
-    private void MockDesk()
+    private void CreateMockDesk()
     {
         _deskMock = new Mock<IShuffleableDesk>();
-        _deskMock.Setup(d => d.Split(out _firstAfterSplit, out _secondAfterSplit)).Callback(() =>
-        {
-        });
+        
+        _deskMock.Setup(d => d.Split(out _firstAfterSplit, out _secondAfterSplit)).Callback(() => { });
     }
 
-    private void MockShuffler()
-    {
-        _shufflerMock = new Mock<IDeskShuffler>();
-        _shufflerMock.Setup(s => s.Shuffle(It.IsAny<IShuffleableDesk>())).Callback(() => {
-            Console.Out.WriteLine("helllo");
-        });
-    }
-
-    private void MockOpponents()
+    private void CreateMockOpponents()
     {
         _elonMock = new Mock<IChooseCard>();
         _markMock = new Mock<IChooseCard>();
-
+        
         _elonMock.Setup(e => e.Choose(_firstAfterSplit)).Returns(_firstAfterSplit.First);
         _markMock.Setup(m => m.Choose(_secondAfterSplit)).Returns(_secondAfterSplit.First);
     }
 
-    private void MockDistributor()
+    private void CreateMockDistributor()
     {
         _distributor = new Mock<IDistributor>();
-
+        
         _distributor.Setup(distributor => distributor.Judge(_firstAfterSplit.First(), _secondAfterSplit.First()))
             .Returns(_firstAfterSplit.First().Color == _secondAfterSplit.First().Color);
     }

@@ -1,5 +1,6 @@
 using Core.Desks;
 using DataLib.Cards;
+using DataLib.Desks;
 
 namespace CoreTest;
 
@@ -20,30 +21,30 @@ public class DeskTest
     [TestCase(1000)]
     public void DeskLengthHasExpectedLength(int count)
     {
-        var desk = new ShuffleableDesk(count);
-
+        IDesk desk = new ShuffleableDesk(count);
+    
         count.Should().Be(desk.Length);
     }
-
+    //
     [TestCase(36)]
     [TestCase(54)]
     public void DeskSplitTwoHalvesEqualLength(int count)
     {
-        var desk = new ShuffleableDesk(count);
+        IDesk desk = new ShuffleableDesk(count);
         
         desk.Split(out var firstSplitCard, out var secondSplitCard);
-
+    
         secondSplitCard.Length.Should().Be(firstSplitCard.Length);
     }
-
+    
     [TestCase(36)]
     [TestCase(54)]
     public void DeskSplitTowNotEqualHalves(int count)
     {
-        var desk = new ShuffleableDesk(count);
-        desk.Split(out var firstSplitCard, out var secondSplitCard);
+        IDesk desk = new ShuffleableDesk(count);
         var countEqualsCard = 0;
         
+        desk.Split(out var firstSplitCard, out var secondSplitCard);
         for (var i = 0u; i < count/2; i++)
         {
             for (var j = 0u; j < count/2; j++)
@@ -74,7 +75,7 @@ public class DeskTest
     [TestCase(54)]
     public void DeskHasNotSameCard(int count)
     {
-        var desk = new ShuffleableDesk(count);
+        IDesk desk = new ShuffleableDesk(count);
         var countEqualsCard = 0;
         
         for (var i = 0; i < count - 1; i++)
@@ -87,7 +88,7 @@ public class DeskTest
                 }
             }
         }
-
+    
         countEqualsCard.Should().Be(0);
     }
 

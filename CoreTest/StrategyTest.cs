@@ -1,5 +1,7 @@
 using Core.Desks;
 using Core.Strategies;
+using DataLib.Cards;
+using DataLib.Desks;
 
 namespace CoreTest;
 
@@ -8,14 +10,13 @@ public class StrategyTest
 {
     [TestCase(36)]
     [TestCase(54)]
-    public void PickFirstStrategy_Always_Returns0(int count)
+    public void PickFirstStrategyAlwaysReturnsFirst(int count)
     {
+        Card[] firstAfterSplit = { new(Color.Black, 1) };
+        Card[] secondAfterSplit = { new(Color.Black, 2) };
         var strategy = new PickFirstCardStrategy();
-        var desk = new ShuffleableDesk(count);
-        
-        desk.Split(out var firstPart,out var secondPart);
-        
-        strategy.Pick(firstPart).Should().Be(firstPart.First());
-        strategy.Pick(secondPart).Should().Be(secondPart.First());
+
+        strategy.Pick(firstAfterSplit).Should().Be(firstAfterSplit.First());
+        strategy.Pick(secondAfterSplit).Should().Be(secondAfterSplit.First());
     }
 }

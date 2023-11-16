@@ -1,29 +1,24 @@
 using DataLib.Cards;
-using DataLib.Desks;
 using DataLib.Desks.Interfaces;
 
-namespace Core.Desks;
+namespace DataLib.Desks;
 
 public class ShuffleableDesk : IShuffleableDesk
 {
     public IList<Card> Cards { get; }
-
-    public int Length => Cards.Count;
-
-    public Card GetByIndex(int index)
-    {
-        return Cards[index];
-    }
-
-    public void Split(out Card[] first, out Card[] second)
-    {
-        var mid = Length / 2;
-        first = Cards.Take(mid).ToArray();
-        second = Cards.Skip(mid).ToArray();
-    }
-
+    
     public ShuffleableDesk(int count)
     {
+        if (count <= 0)
+        {
+            throw new ArgumentException("Не может быть пустой колоды");
+        }
+        
+        if (count % 2 == 1)
+        {
+            throw new ArgumentException("Не может существовать нечетной колоды");
+        }
+        
         var cards = new Card[count];
         for (var i = 0; i < count; i += 2)
         {
