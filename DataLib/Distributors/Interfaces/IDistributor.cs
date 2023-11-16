@@ -1,8 +1,8 @@
 using DataLib.Cards;
 
-namespace DataLib.Persons.Distributors;
+namespace DataLib.Distributors.Interfaces;
 
-public interface  IDistributor
-{ 
+public interface IDistributor
+{
     bool Judge(Card cardFirstOpponent, Card cardSecondOpponent);
 }

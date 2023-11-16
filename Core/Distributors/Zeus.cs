@@ -1,5 +1,5 @@
 using DataLib.Cards;
-using DataLib.Persons.Distributors;
+using DataLib.Distributors.Interfaces;
 
 namespace Core.Distributors;
 
