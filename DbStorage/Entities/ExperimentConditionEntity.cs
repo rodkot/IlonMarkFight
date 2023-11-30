@@ -1,7 +1,7 @@
 ﻿using DataLib.Cards;
 using Models;
 
-namespace DbStorage.Enitites;
+namespace DbStorage.Entities;
 
 public class ExperimentConditionEntity
 {
@@ -13,18 +13,18 @@ public class ExperimentConditionEntity
         CardEntities = entities;
     }
 
-    public ExperimentConditionEntity(EnumerableDesk desk)
+    public ExperimentConditionEntity(ShuffleableDesk desk)
     {
         CardEntities = (from Card card in desk select CardEntity.FromCard(card)).ToList();
     }
 
-    public static ExperimentConditionEntity FromDeck(EnumerableDesk desk)
+    public static ExperimentConditionEntity FromDeck(ShuffleableDesk desk)
     {
         return new ExperimentConditionEntity(desk);
     }
 
-    public EnumerableDesk ToDeck()
+    public ShuffleableDesk ToDeck()
     {
-        return new EnumerableDesk(CardEntities.Select(c => c.ToCard()).ToList());
+        return new ShuffleableDesk(CardEntities.Select(c => c.ToCard()).ToList());
     }
 }

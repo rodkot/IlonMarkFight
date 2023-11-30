@@ -1,11 +1,13 @@
+using System.Collections;
 using DataLib.Cards;
 using DataLib.Desks.Interfaces;
 
-namespace DataLib.Desks;
+namespace Models;
 
-public class ShuffleableDesk : IShuffleableDesk
+public class ShuffleableDesk : IShuffleableDesk, IEnumerable
 {
     public IList<Card> Cards { get; }
+
     public ShuffleableDesk(int count)
     {
         if (count <= 0)
@@ -31,5 +33,10 @@ public class ShuffleableDesk : IShuffleableDesk
     public ShuffleableDesk(IList<Card> cards)
     {
         Cards = cards;
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        return Cards.GetEnumerator();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using DataLib.Cards;
 
-namespace DbStorage.Enitites;
+namespace DbStorage.Entities;
 
 public class CardEntity
 {

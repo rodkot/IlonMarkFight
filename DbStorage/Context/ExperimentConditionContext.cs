@@ -1,7 +1,7 @@
-﻿using DbStorage.Enitites;
+﻿using DbStorage.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DbStorage;
+namespace DbStorage.Context;
 
 public class ExperimentConditionContext : DbContext
 {

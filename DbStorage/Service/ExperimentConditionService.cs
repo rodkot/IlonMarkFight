@@ -1,23 +1,19 @@
 ﻿using DataLib.Desks.Interfaces;
-using DbStorage.Enitites;
+using DbStorage.Context;
+using DbStorage.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Models;
 
-namespace DbStorage;
+namespace DbStorage.Service;
 
-/*
- * TODO Вопросы
- * Нужно ли сохранять стратегии? Или что/как сохранять контекст игры?
- * Нужны ли миграции?
- */
 public class ExperimentConditionService
 {
     private readonly ExperimentConditionContext _experimentConditionContext;
     private readonly ILogger<ExperimentConditionService> _logger;
 
     public ExperimentConditionService(
-        IDbContextFactory<ExperimentConditionContext> contextFactory, 
+        IDbContextFactory<ExperimentConditionContext> contextFactory,
         ILogger<ExperimentConditionService> logger)
     {
         _experimentConditionContext = contextFactory.CreateDbContext();
@@ -31,7 +27,7 @@ public class ExperimentConditionService
         _experimentConditionContext.Database.EnsureCreated();
     }
 
-    public void AddOne(EnumerableDesk deck)
+    public void AddOne(ShuffleableDesk deck)
     {
         _experimentConditionContext.Conditions.Add(ExperimentConditionEntity.FromDeck(deck));
         _experimentConditionContext.SaveChanges();

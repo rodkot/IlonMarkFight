@@ -1,4 +1,4 @@
-﻿using DataLib.Desks;
+﻿using Models;
 
 namespace Core.Desks;
 

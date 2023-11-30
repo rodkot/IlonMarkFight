@@ -1,14 +1,10 @@
 ﻿using Core.Config;
-using Core.Sandboxes;
-using DataLib.Cards;
-using DataLib.Desks;
-using DataLib.Desks.Interfaces;
-using DataLib.SandBoxes;
 using DataLib.SandBoxes.Interfaces;
 using DataLib.Shuffler.Interfaces;
-using DbStorage;
+using DbStorage.Service;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Models;
 
 namespace Core.Workers;
 
@@ -16,14 +12,15 @@ public class SandboxDbWorker : BackgroundService
 {
     private readonly ILogger<SandboxDbWorker> _logger;
     private readonly ExperimentConditionService _service;
-    private readonly IShuffleableDesk _cardDeck;
+    private readonly ShuffleableDesk _cardDeck;
     private readonly CoreConfig _config;
     private readonly IHostApplicationLifetime _lifetime;
     private readonly IDeskShuffler _shuffler;
     private readonly ISandBox _sandbox;
 
 
-    public SandboxDbWorker(ILogger<SandboxDbWorker> logger, ExperimentConditionService service, ISandBox sandbox, IHostApplicationLifetime lifetime, IDeskShuffler shuffler, CoreConfig config)
+    public SandboxDbWorker(ILogger<SandboxDbWorker> logger, ExperimentConditionService service, ISandBox sandbox,
+        IHostApplicationLifetime lifetime, IDeskShuffler shuffler, CoreConfig config, ShuffleableDesk cardDeck)
     {
         _logger = logger;
         _service = service;
@@ -31,6 +28,8 @@ public class SandboxDbWorker : BackgroundService
         _lifetime = lifetime;
         _shuffler = shuffler;
         _config = config;
+        _cardDeck = cardDeck;
+        _sandbox = sandbox;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -65,11 +64,13 @@ public class SandboxDbWorker : BackgroundService
             var decks = _service.GetFirstN(_config.ExperimentCount);
             for (var i = 0; i < decks.Count && !stoppingToken.IsCancellationRequested; i++)
             {
-              
+                if (_sandbox.Round(_cardDeck))
+                {
+                    success += 1;
+                }
+
+                completed += 1;
             }
-            
-            // Console.WriteLine($"\nExperiments completed: {completed}");
-            // Console.WriteLine($"Success rate: {(double)success / completed}\n");
         }
         catch (Exception e)
         {
@@ -79,12 +80,35 @@ public class SandboxDbWorker : BackgroundService
         {
             _lifetime.StopApplication();
         }
-        
+
+        _logger.LogInformation($"Experiments completed: {completed}");
+        _logger.LogInformation($"Success rate: {(double)success / completed}");
+
         return Task.CompletedTask;
     }
 
     private Task Generate(CancellationToken stoppingToken)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _service.RecreateDb();
+            for (var i = 0; i < _config.ExperimentCount && !stoppingToken.IsCancellationRequested; i++)
+            {
+                _shuffler.Shuffle(_cardDeck);
+                _service.AddOne(_cardDeck);
+            }
+
+            _logger.LogInformation($"generated {_config.ExperimentCount} experiments");
+        }
+        catch (Exception e)
+        {
+            _logger.LogCritical(e.Message);
+        }
+        finally
+        {
+            _lifetime.StopApplication();
+        }
+
+        return Task.CompletedTask;
     }
 }
