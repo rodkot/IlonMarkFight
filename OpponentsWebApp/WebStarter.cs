@@ -14,6 +14,7 @@ public class WebStarter
     {
         if (args.Length != 1)
         {
+            //TODO Сделать с логгером
             Console.Error.WriteLine($"Wrong amount of arguments: expected 1, has {args.Length}");
         }
         var app = CreateBuilder(args).Build();

@@ -1,5 +1,4 @@
 ﻿using DataLib.Opponents;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using OpponentsWebApp.Dto;
 using OpponentsWebApp.Validators;
@@ -8,11 +7,11 @@ namespace OpponentsWebApp.Controllers;
 
 [ApiController]
 [Route("opponent")]
-public class OpponentChoiceController
+public class OpponentController
 {
     private readonly Opponent _opponent;
 
-    public OpponentChoiceController(Opponent opponent)
+    public OpponentController(Opponent opponent)
     {
         _opponent = opponent;
     }
@@ -23,7 +22,7 @@ public class OpponentChoiceController
     [HttpPost(Name = "choose")]
     public IResult Choose([FromBody] IList<CardDto> dtos)
     {
-        var dropDesk = CardDeckValidator.ValidateAndReturn(dtos);
+        var dropDesk = CardDeskValidator.ValidateAndReturn(dtos);
 
         return Results.Ok(CardDto.ToCardDto(_opponent.Choose(dropDesk)));
     }

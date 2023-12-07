@@ -4,7 +4,7 @@ using OpponentsWebApp.Exceptions;
 
 namespace OpponentsWebApp.Validators;
 
-public class CardDeckValidator
+public class CardDeskValidator
 {
     public static int CardsCount { get; } = 18;
     
@@ -13,7 +13,7 @@ public class CardDeckValidator
         var desk = dtos.Select(dto => dto.ToCard()).ToList();
         if (desk.Count != CardsCount)
         {
-            throw new BadDeckLength();
+            throw new BadDeskLength();
         }
 
         return desk;

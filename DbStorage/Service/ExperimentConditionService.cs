@@ -25,27 +25,27 @@ public class ExperimentConditionService
         _experimentConditionContext.Database.EnsureCreated();
     }
 
-    public void AddOne(ShuffleableDesk deck)
+    public void AddOne(ShuffleableDesk desk)
     {
-        _experimentConditionContext.Conditions.Add(ExperimentConditionEntity.FromDeck(deck));
+        _experimentConditionContext.Conditions.Add(ExperimentConditionEntity.FromDesk(desk));
         _experimentConditionContext.SaveChanges();
     }
 
     public IList<IShuffleableDesk> GetFirstN(int n)
     {
         var conditions = _experimentConditionContext.Conditions.OrderBy(c => c.Id).Take(n);
-        var decks = new List<IShuffleableDesk>();
+        var desks = new List<IShuffleableDesk>();
         if (!conditions.Any())
         {
-            return decks;
+            return desks;
         }
 
         foreach (var cond in conditions)
         {
             _experimentConditionContext.Entry(cond).Collection(c => c.CardEntities).Load();
-            decks.Add(cond.ToDeck());
+            desks.Add(cond.ToDesk());
         }
 
-        return decks;
+        return desks;
     }
 }

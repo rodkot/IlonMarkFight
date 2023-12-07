@@ -20,10 +20,10 @@ public class ExceptionMiddleware
             // Call the next delegate/middleware in the pipeline.
             await _next(context);
         }
-        catch (BadDeckLength e)
+        catch (BadDeskLength e)
         {
             context.Response.StatusCode = 400;
-            var err = new ErrorDto { Message = "bad-deck-length"};
+            var err = new ErrorDto { Message = "bad-desk-length"};
             //var errResp = new ErrorResponse { Errors = new List<ErrorDto> { err } };
             await JsonSerializer.SerializeAsync(context.Response.Body, err);
         }

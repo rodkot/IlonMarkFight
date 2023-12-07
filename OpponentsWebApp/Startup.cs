@@ -25,7 +25,6 @@ public class Startup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddSingleton(_opponent);
-        Console.WriteLine($"{_opponent.Name}: services configured");
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -40,7 +39,5 @@ public class Startup
 
         app.UseRouting();
         app.UseEndpoints(endpoint => { endpoint.MapControllers(); });
-
-        Console.WriteLine($"{_opponent.Name}: configured");
     }
 }

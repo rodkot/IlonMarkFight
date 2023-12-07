@@ -12,7 +12,7 @@ public class SandboxDbWorker : BackgroundService
 {
     private readonly ILogger<SandboxDbWorker> _logger;
     private readonly ExperimentConditionService _service;
-    private readonly ShuffleableDesk _cardDeck;
+    private readonly ShuffleableDesk _cardDesk;
     private readonly CoreConfig _config;
     private readonly IHostApplicationLifetime _lifetime;
     private readonly IDeskShuffler _shuffler;
@@ -20,7 +20,7 @@ public class SandboxDbWorker : BackgroundService
 
 
     public SandboxDbWorker(ILogger<SandboxDbWorker> logger, ExperimentConditionService service, ISandBox sandbox,
-        IHostApplicationLifetime lifetime, IDeskShuffler shuffler, CoreConfig config, ShuffleableDesk cardDeck)
+        IHostApplicationLifetime lifetime, IDeskShuffler shuffler, CoreConfig config, ShuffleableDesk cardDesk)
     {
         _logger = logger;
         _service = service;
@@ -28,7 +28,7 @@ public class SandboxDbWorker : BackgroundService
         _lifetime = lifetime;
         _shuffler = shuffler;
         _config = config;
-        _cardDeck = cardDeck;
+        _cardDesk = cardDesk;
         _sandbox = sandbox;
     }
 
@@ -61,10 +61,10 @@ public class SandboxDbWorker : BackgroundService
         var completed = 0;
         try
         {
-            var decks = _service.GetFirstN(_config.ExperimentCount);
-            for (var i = 0; i < decks.Count && !stoppingToken.IsCancellationRequested; i++)
+            var desks = _service.GetFirstN(_config.ExperimentCount);
+            for (var i = 0; i < desks.Count && !stoppingToken.IsCancellationRequested; i++)
             {
-                if (_sandbox.Round(decks[i]))
+                if (_sandbox.Round(desks[i]))
                 {
                     success += 1;
                 }
@@ -94,8 +94,8 @@ public class SandboxDbWorker : BackgroundService
             _service.RecreateDb();
             for (var i = 0; i < _config.ExperimentCount && !stoppingToken.IsCancellationRequested; i++)
             {
-                _shuffler.Shuffle(_cardDeck);
-                _service.AddOne(_cardDeck);
+                _shuffler.Shuffle(_cardDesk);
+                _service.AddOne(_cardDesk);
             }
 
             _logger.LogInformation($"generated {_config.ExperimentCount} experiments");
