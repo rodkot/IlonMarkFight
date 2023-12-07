@@ -10,10 +10,10 @@ namespace Core.Sandboxes;
 
 public class NoShuffleableDeskSandbox: ISandBox
 {
-    private readonly IChooseCard _opponentFirst;
-    private readonly IChooseCard _opponentSecond;
+    private readonly IChooseCardAsync _opponentFirst;
+    private readonly IChooseCardAsync _opponentSecond;
     private readonly IDistributor _distributor;
-    public NoShuffleableDeskSandbox(IEnumerable<Opponent> opponents, IDistributor distributor) 
+    public NoShuffleableDeskSandbox(IEnumerable<IChooseCardAsync> opponents, IDistributor distributor) 
     {
         var enumerable = opponents.ToArray();
 
@@ -31,9 +31,11 @@ public class NoShuffleableDeskSandbox: ISandBox
     {
         desk.Split(out var firstSplitCard, out var secondSplitCard);
 
-        var firstCard = _opponentFirst.Choose(firstSplitCard);
-        var secondCard = _opponentSecond.Choose(secondSplitCard);
+        var t1 = _opponentFirst.Choose(firstSplitCard);
+        var t2 = _opponentSecond.Choose(secondSplitCard);
+        
+        Task.WaitAll(t1, t2);
 
-        return _distributor.Judge(firstCard, secondCard);
+        return _distributor.Judge(t1.Result, t2.Result);
     }
 }

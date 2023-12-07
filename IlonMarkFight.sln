@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbStorage", "DbStorage\DbSt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{D1B0090D-9319-48D1-A7F8-C9464251F225}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpponentsWebApp", "OpponentsWebApp\OpponentsWebApp.csproj", "{338A6BF1-38E2-4FF1-8175-72C4D3CF7F1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{D1B0090D-9319-48D1-A7F8-C9464251F225}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1B0090D-9319-48D1-A7F8-C9464251F225}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1B0090D-9319-48D1-A7F8-C9464251F225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{338A6BF1-38E2-4FF1-8175-72C4D3CF7F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{338A6BF1-38E2-4FF1-8175-72C4D3CF7F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{338A6BF1-38E2-4FF1-8175-72C4D3CF7F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{338A6BF1-38E2-4FF1-8175-72C4D3CF7F1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

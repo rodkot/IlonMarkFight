@@ -1,10 +1,11 @@
 ﻿namespace Core.Config;
 
 
-public class CoreConfig
+public record CoreConfig(int ExperimentCount, DbRequest Request);
+
+public class ExperimentConfig
 {
-    public int ExperimentCount { get; init; }
-    public DbRequest Request { get; init; }
+    public IList<Uri> Uris { get; init; }
 }
 
 public enum DbRequest

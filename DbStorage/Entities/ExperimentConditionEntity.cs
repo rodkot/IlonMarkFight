@@ -7,6 +7,8 @@ public class ExperimentConditionEntity
 {
     public int Id { get; set; }
     public IList<CardEntity> CardEntities { get; set; }
+    
+    public ExperimentConditionEntity() {}
 
     public ExperimentConditionEntity(IList<CardEntity> entities)
     {

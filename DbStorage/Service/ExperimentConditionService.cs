@@ -10,14 +10,12 @@ namespace DbStorage.Service;
 public class ExperimentConditionService
 {
     private readonly ExperimentConditionContext _experimentConditionContext;
-    private readonly ILogger<ExperimentConditionService> _logger;
+ 
 
     public ExperimentConditionService(
-        IDbContextFactory<ExperimentConditionContext> contextFactory,
-        ILogger<ExperimentConditionService> logger)
+        ExperimentConditionContext context)
     {
-        _experimentConditionContext = contextFactory.CreateDbContext();
-        _logger = logger;
+        _experimentConditionContext = context;
         _experimentConditionContext.Database.EnsureCreated();
     }
 
