@@ -63,7 +63,7 @@ internal static class Program
     
         */
 
-        CoreConfig config = new CoreConfig(100, DbRequest.Generate);
+        CoreConfig config = new CoreConfig(100, DbRequest.UseGenerated);
         
         return Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) =>

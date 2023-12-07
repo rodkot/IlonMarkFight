@@ -81,6 +81,11 @@ public class CardDto
         Number = card.Number;
     }
 
+    public CardDto()
+    {
+
+    }
+ 
     public Card ToCard()
     {
         return new Card(Color, Number);

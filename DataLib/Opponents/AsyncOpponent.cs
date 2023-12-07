@@ -11,7 +11,7 @@ public class AsyncOpponent: IChooseCardAsync
 
     public AsyncOpponent(IHttpAskerOpponent asker)
     {
-       
+        this.asker = asker;
     }
 
    

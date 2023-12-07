@@ -17,7 +17,7 @@ public class OpponentChoiceController
         _opponent = opponent;
     }
 
-    [ProducesResponseType(typeof(OpponentChoiceDto), 200)]
+    [ProducesResponseType(typeof(CardDto), 200)]
     [ProducesResponseType(typeof(ErrorDto), 400)]
     [ProducesResponseType(typeof(ErrorDto), 500)]
     [HttpPost(Name = "choose")]
@@ -25,7 +25,6 @@ public class OpponentChoiceController
     {
         var dropDesk = CardDeckValidator.ValidateAndReturn(dtos);
 
-        return Results.Ok(new OpponentChoiceDto
-            { Name = _opponent.Name, Card = CardDto.ToCardDto(_opponent.Choose(dropDesk)) });
+        return Results.Ok(CardDto.ToCardDto(_opponent.Choose(dropDesk)));
     }
 }

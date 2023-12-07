@@ -64,7 +64,7 @@ public class SandboxDbWorker : BackgroundService
             var decks = _service.GetFirstN(_config.ExperimentCount);
             for (var i = 0; i < decks.Count && !stoppingToken.IsCancellationRequested; i++)
             {
-                if (_sandbox.Round(_cardDeck))
+                if (_sandbox.Round(decks[i]))
                 {
                     success += 1;
                 }
