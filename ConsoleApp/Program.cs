@@ -32,61 +32,49 @@ internal static class Program
 
     private static IHostBuilder CreateHostBuilder(string[] args)
     {
-        /*return Host.CreateDefaultBuilder(args)
-            .ConfigureServices((hostContext, services) =>
-            {
-                
-                services.AddHostedService<SandboxDbWorker>();
-                services.AddSingleton<ExperimentConditionService>();
-                services.AddDbContext<ExperimentConditionContext>();
-                services.AddDbContextFactory<ExperimentConditionContext>(
-                    options => options.UseSqlite(
-                        hostContext.Configuration.GetConnectionString("RoundDatabase")));
-                services.AddScoped<ISandBox, NoShuffleableDeskSandbox>();
-                services.AddSingleton<IDeskShuffler, RandomDeskShuffler>();
-                services.AddSingleton<IDistributor, Zeus>();
-                services.AddSingleton<Opponent>(new Ilon(new PickFirstCardStrategy()));
-                services.AddSingleton<Opponent>(new Mark(new PickFirstCardStrategy()));
-                services.AddSingleton<ShuffleableDesk>(new Shuffleable36CardDesk());
-                services.AddSingleton(new CoreConfig(1_000,DbRequest.Generate));
-                
-                 
-                 services.AddHostedService<SandboxWorker>();
-                 services.AddScoped<ISandBox, NoShuffleableDeskSandbox>();
-                 services.AddSingleton<IDeskShuffler, RandomDeskShuffler>();
-                 services.AddSingleton<IDistributor, Zeus>();
-                 services.AddSingleton<Opponent>(new Ilon(new PickFirstCardStrategy()));
-                 services.AddSingleton<Opponent>(new Mark(new PickFirstCardStrategy()));
-                 services.AddSingleton<IShuffleableDesk>(new Shuffleable36CardDesk());
-               
-            });    
-    
-        */
+        return args.Length switch
+        {
+            1 => Host.CreateDefaultBuilder(args)
+                .ConfigureServices((_, services) =>
+                {
+                    var config = new CoreConfig(int.Parse(args[0]), DbRequest.None);
+                    
+                    services.AddHostedService<SandboxWorker>();
+                    services.AddScoped<ISandBox, NoShuffleableDeskSandbox>();
+                    services.AddSingleton<IDeskShuffler, RandomDeskShuffler>();
+                    services.AddSingleton<IDistributor, Zeus>();
+                    services.AddSingleton<Opponent>(new Ilon(new PickFirstCardStrategy()));
+                    services.AddSingleton<Opponent>(new Mark(new PickFirstCardStrategy()));
+                    services.AddSingleton<IShuffleableDesk>(new Shuffleable36CardDesk());
+                    services.AddSingleton(config);
+                }),
+            2 => Host.CreateDefaultBuilder(args)
+                .ConfigureServices((hostContext, services) =>
+                {
+                    var config = args[0] switch
+                    {
+                        "generate" => new CoreConfig(int.Parse(args[1]), DbRequest.Generate),
+                        "useGenerated" => new CoreConfig(int.Parse(args[1]), DbRequest.UseGenerated),
+                        _ => throw new ArgumentException(
+                            $"bad cmd argument, available arguments are: generate, useGenerated")
+                    };
 
-        CoreConfig config = new CoreConfig(100, DbRequest.UseGenerated);
-        
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureServices((hostContext, services) =>
-            {
-                Console.WriteLine($"db path is: {hostContext.Configuration.GetConnectionString("ExperimentDatabase")}");
-                var uris = new List<Uri>();
-                uris.Add(new Uri(hostContext.Configuration.GetConnectionString("Player1")!));
-                uris.Add(new Uri(hostContext.Configuration.GetConnectionString("Player2")!));
-                var expConfig = new ExperimentConfig {Uris = uris};
-                
-                services.AddHostedService<SandboxDbWorker>();
-                services.AddSingleton<IDeskShuffler, RandomDeskShuffler>();
-                services.AddScoped<ISandBox, NoShuffleableDeskSandbox>();
-                services.AddSingleton<ShuffleableDesk>(new Shuffleable36CardDesk());
-                services.AddSingleton<IDistributor, Zeus>();
-                services.AddSingleton<IChooseCardAsync>(new AsyncOpponent(new HttpOpponentAsker(uris[0])));
-                services.AddSingleton<IChooseCardAsync>(new AsyncOpponent(new HttpOpponentAsker(uris[1])));
-                services.AddDbContextFactory<ExperimentConditionContext>(
-                    options => options.UseSqlite(
-                        hostContext.Configuration.GetConnectionString("ExperimentDatabase")));
-                services.AddSingleton<ExperimentConditionService>();
-                services.AddSingleton(config);
-                services.AddSingleton(expConfig);
-            });
+                    var firstUri = new Uri(hostContext.Configuration.GetConnectionString("Opponents1")!);
+                    var secondUri = new Uri(hostContext.Configuration.GetConnectionString("Opponents2")!);
+
+                    services.AddHostedService<SandboxDbWorker>();
+                    services.AddSingleton<IDeskShuffler, RandomDeskShuffler>();
+                    services.AddScoped<ISandBox, NoShuffleableDeskSandbox>();
+                    services.AddSingleton<ShuffleableDesk>(new Shuffleable36CardDesk());
+                    services.AddSingleton<IDistributor, Zeus>();
+                    services.AddSingleton<IChooseCardAsync>(new AsyncOpponent(new HttpOpponentAsker(firstUri)));
+                    services.AddSingleton<IChooseCardAsync>(new AsyncOpponent(new HttpOpponentAsker(secondUri)));
+                    services.AddDbContextFactory<ExperimentConditionContext>(options =>
+                        options.UseSqlite(hostContext.Configuration.GetConnectionString("Database")));
+                    services.AddSingleton<ExperimentConditionService>();
+                    services.AddSingleton(config);
+                }),
+            _ => throw new ArgumentException($"wrong amount of arguments, expected 1 or 2 has {args.Length}")
+        };
     }
 }

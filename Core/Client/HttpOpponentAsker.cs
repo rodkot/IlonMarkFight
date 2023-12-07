@@ -49,19 +49,6 @@ public class HttpOpponentAsker : IHttpAskerOpponent
     }
 }
 
-// public class CardChoiceDto
-// {
-//     [JsonPropertyName("name")]
-//     [JsonRequired]
-//     public string Name { get; set; }
-//
-//     [JsonPropertyName("cardNumber")]
-//     [JsonRequired]
-//     public int CardNumber { get; set; }
-//
-//     [JsonPropertyName("errors")] public IEnumerable<string> Errors { get; set; }
-// }
-
 public class CardDto
 {
     [JsonPropertyName("Color")]
