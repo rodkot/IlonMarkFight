@@ -1,14 +1,12 @@
-using Core.Desks;
 using Core.Sandboxes;
 using DataLib.Cards;
 using DataLib.Desks.Interfaces;
 using DataLib.Distributors.Interfaces;
 using DataLib.Opponents.Interfaces;
-using DataLib.SandBoxes;
 using DataLib.SandBoxes.Interfaces;
 using DataLib.Shuffler.Interfaces;
 
-namespace CoreTest;
+namespace Test;
 
 [TestFixture]
 public class SandBoxTest

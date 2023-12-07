@@ -1,6 +1,6 @@
 using DataLib.Cards;
 
-namespace CoreTest;
+namespace Test;
 [TestFixture]
 public class CardTests
 {

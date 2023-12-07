@@ -69,8 +69,11 @@ internal static class Program
                     services.AddSingleton<IDistributor, Zeus>();
                     services.AddSingleton<IChooseCardAsync>(new AsyncOpponent(new HttpOpponentAsker(firstUri)));
                     services.AddSingleton<IChooseCardAsync>(new AsyncOpponent(new HttpOpponentAsker(secondUri)));
-                    services.AddDbContextFactory<ExperimentConditionContext>(options =>
-                        options.UseSqlite(hostContext.Configuration.GetConnectionString("Database")));
+                    // services.AddDbContextFactory<ExperimentConditionContext>(options =>
+                    //     options.UseSqlite(hostContext.Configuration.GetConnectionString("Database")));
+                    services.AddDbContextFactory<ExperimentConditionContext>(
+                        options => options.UseSqlite(
+                            hostContext.Configuration.GetConnectionString("Database")));
                     services.AddSingleton<ExperimentConditionService>();
                     services.AddSingleton(config);
                 }),

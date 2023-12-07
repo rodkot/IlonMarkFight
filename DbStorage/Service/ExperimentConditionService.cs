@@ -13,9 +13,9 @@ public class ExperimentConditionService
  
 
     public ExperimentConditionService(
-        ExperimentConditionContext context)
+        IDbContextFactory<ExperimentConditionContext> contextFactory)
     {
-        _experimentConditionContext = context;
+        _experimentConditionContext = contextFactory.CreateDbContext();
         _experimentConditionContext.Database.EnsureCreated();
     }
 
