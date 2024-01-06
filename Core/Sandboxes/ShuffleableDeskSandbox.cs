@@ -1,21 +1,20 @@
-using DataLib.Desks;
 using DataLib.Desks.Interfaces;
 using DataLib.Distributors.Interfaces;
 using DataLib.Exceptions;
 using DataLib.Opponents.Interfaces;
+using DataLib.SandBoxes.Interfaces;
 using DataLib.Shuffler.Interfaces;
 
-namespace DataLib.SandBoxes;
+namespace Core.Sandboxes;
 
-public class Sandbox
+public class ShuffleableDeskSandbox: ISandBox
 {
     private readonly IChooseCard _opponentFirst;
     private readonly IChooseCard _opponentSecond;
-    private readonly IShuffleableDesk _desk;
     private readonly IDistributor _distributor;
     private readonly IDeskShuffler _deskShuffler;
 
-    public Sandbox(IEnumerable<IChooseCard> opponents, IShuffleableDesk desk, IDistributor distributor,
+    public ShuffleableDeskSandbox(IEnumerable<IChooseCard> opponents, IDistributor distributor,
         IDeskShuffler deskShuffler)
     {
         var enumerable = opponents.ToArray();
@@ -27,15 +26,15 @@ public class Sandbox
 
         _opponentFirst = enumerable[0];
         _opponentSecond = enumerable[1];
-        _desk = desk;
         _distributor = distributor;
         _deskShuffler = deskShuffler;
     }
 
-    public bool Round()
+  
+    public bool Round(IShuffleableDesk desk)
     {
-        _deskShuffler.Shuffle(_desk);
-        _desk.Split(out var firstSplitCard, out var secondSplitCard);
+        _deskShuffler.Shuffle(desk);
+        desk.Split(out var firstSplitCard, out var secondSplitCard);
 
         var firstCard = _opponentFirst.Choose(firstSplitCard);
         var secondCard = _opponentSecond.Choose(secondSplitCard);

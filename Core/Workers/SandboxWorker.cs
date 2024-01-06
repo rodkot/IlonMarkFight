@@ -1,4 +1,8 @@
+using Core.Config;
+using Core.Sandboxes;
+using DataLib.Desks.Interfaces;
 using DataLib.SandBoxes;
+using DataLib.SandBoxes.Interfaces;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -6,23 +10,26 @@ namespace Core.Workers;
 
 public class SandboxWorker : BackgroundService
 {
-    private static int Count => 1_000_000;
-    private readonly Sandbox _sandbox;
+    private readonly int _count;
+    private readonly ISandBox _sandbox;
     private readonly ILogger _logger;
+    private readonly IShuffleableDesk _shuffleableDesk;
     private readonly IHostApplicationLifetime _lifetime;
 
-    public SandboxWorker(Sandbox sandbox, ILogger<SandboxWorker>  logger, IHostApplicationLifetime lifetime)
+    public SandboxWorker(ISandBox sandbox, ILogger<SandboxWorker>  logger, IHostApplicationLifetime lifetime, IShuffleableDesk shuffleableDesk, CoreConfig config, int count)
     {
         _sandbox = sandbox;
         _logger = logger;
         _lifetime = lifetime;
+        _shuffleableDesk = shuffleableDesk;
+        _count = config.ExperimentCount;
     }
     
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var success = 0;
         var completed = 0;
-        for (var i = 0; i < Count && !stoppingToken.IsCancellationRequested; i++)
+        for (var i = 0; i < _count && !stoppingToken.IsCancellationRequested; i++)
         {
             
             if (i % 100000 == 0)
@@ -30,7 +37,7 @@ public class SandboxWorker : BackgroundService
                 _logger.LogInformation($"Completed {i} iteration");
             }
 
-            if (_sandbox.Round())
+            if (_sandbox.Round(_shuffleableDesk))
             {
                 success += 1;
             }

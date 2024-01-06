@@ -1,8 +1,8 @@
-using Core.Desks;
 using DataLib.Cards;
 using DataLib.Desks;
+using Models;
 
-namespace CoreTest;
+namespace Test;
 
 [TestFixture]
 public class DeskTest

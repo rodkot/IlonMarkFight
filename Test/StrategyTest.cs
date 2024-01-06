@@ -1,9 +1,7 @@
-using Core.Desks;
 using Core.Strategies;
 using DataLib.Cards;
-using DataLib.Desks;
 
-namespace CoreTest;
+namespace Test;
 
 [TestFixture]
 public class StrategyTest
